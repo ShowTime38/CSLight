@@ -1,0 +1,7 @@
+C:\C#\CSLight\CSLight\CSLight\bin\Debug\CSLight.exe.config
+C:\C#\CSLight\CSLight\CSLight\bin\Debug\CSLight.exe
+C:\C#\CSLight\CSLight\CSLight\bin\Debug\CSLight.pdb
+C:\C#\CSLight\CSLight\CSLight\obj\Debug\CSLight.csproj.AssemblyReference.cache
+C:\C#\CSLight\CSLight\CSLight\obj\Debug\CSLight.csproj.CoreCompileInputs.cache
+C:\C#\CSLight\CSLight\CSLight\obj\Debug\CSLight.exe
+C:\C#\CSLight\CSLight\CSLight\obj\Debug\CSLight.pdb
