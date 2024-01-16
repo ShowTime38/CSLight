@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CSLight
@@ -557,33 +559,448 @@ namespace CSLight
             //    Console.WriteLine();
             //}
 
-            bool isOpen = true;
-            string[,] books =
-            {
-                {"Александр Пушкин", "Михаил Лермонтов", "Сергей Есенин"},
-                {"Роберт Мартин", "Джесси Шелл", "Сергей Тепляков"}
-            };
+            //bool isOpen = true;
+            //string[,] books =
+            //{
+            //    {"Александр Пушкин", "Михаил Лермонтов", "Сергей Есенин"},
+            //    {"Роберт Мартин", "Джесси Шелл", "Сергей Тепляков"},
+            //    {"Роберт Бук", "Майкл Фост", "Сергей Жирков"}
+            //};
+            //string[] books1 =
+            //{
+            //    "Александр Пушкин", "Михаил Лермонтов", "Сергей Есенин"
+            //};
 
-            while (isOpen)
-            {
-                Console.SetCursorPosition(0, 20);
+            //while (isOpen)
+            //{
+            //    Console.SetCursorPosition(0, 20);
 
-                Console.WriteLine("\nВесь список авторов: \n");
+            //    Console.WriteLine("\nВесь список авторов: \n");
 
-                for (int i = 0; i < books.GetLength(0); i++)
-                {
-                    for (int j = 0; j < books.GetLength(1); j++)
-                    {
-                        Console.Write(books[i, j] + " | ");
-                    }
+            //    for (int i = 0; i < books.GetLength(0); i++)
+            //    {
+            //        for (int j = 0; j < books.GetLength(1); j++)
+            //        {
+            //            Console.Write(books[i, j] + " | ");
+            //        }
 
-                    Console.WriteLine();
-                }
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine("Библиотека");
-                Console.WriteLine("1 - узнать имя автора по индексу книги.");
-                Console.ReadKey();
-            }
+            //        Console.WriteLine();
+            //    }
+            //    Console.SetCursorPosition(0, 0);
+            //    Console.WriteLine("Библиотека");
+            //    Console.WriteLine("\n1 - узнать имя автора по индексу книги." +
+            //        "\n\n2 - найти книгу по автору.\n\n3.Выход");
+            //    Console.Write("\nВыбирите пункт меню: ");
+
+            //    switch(Convert.ToInt32(Console.ReadLine()))
+            //    {
+            //        case 1:
+            //            int line, column;
+            //            Console.Write("Введите номер полки: ");
+            //            line = Convert.ToInt32(Console.ReadLine()) - 1;
+            //            Console.Write("Введите номер столбца: ");
+            //            column = Convert.ToInt32(Console.ReadLine()) - 1;
+            //            Console.WriteLine("Это автор: " + books[line, column]);
+            //            break; 
+            //        case 2:
+            //            string author;
+            //            Console.Write("Введите автора: ");
+            //            author = Console.ReadLine();
+            //            bool authorIsFound = false;
+            //            for(int i = 0;i < books.GetLength(0); i++)
+            //            {
+            //                for(int j = 0; j < books.GetLength(1); j++)
+            //                {
+            //                    if(author.ToLower() == books[i, j].ToLower())
+            //                    {
+            //                        Console.Write($"Автор {books[i,j]} находиться по адресу полка {i+1} место {j+1}");
+            //                        authorIsFound = true;
+            //                    }
+            //                }
+            //            }
+            //            if(authorIsFound == false)
+            //            {
+            //                Console.WriteLine("Такого автора нет.");
+            //            }
+            //            break;
+            //        case 3:
+            //            isOpen = false;
+            //            break;
+            //        default:
+            //            Console.WriteLine("Введена неверная программа.");
+            //            break;
+            //    }
+
+            //    if (isOpen)
+            //    {
+            //        Console.WriteLine("\nНажмите любую клавишу для продолжения...");
+            //    }
+
+
+            //    Console.ReadKey();
+            //    Console.Clear();
+            //}
+
+            //int[] array = new int[3];
+            //int[] tempArray = new int[5];
+
+            //array = tempArray;
+            //array[0] = 5;
+
+            //Console.WriteLine(tempArray[0]); 
+
+            //int[] bag = new int[1];
+            //int[] tempbag = new int[bag.Length + 1];
+            //bag[0] = 12;
+            //for (int i = 0; i < bag.Length; i++)
+            //{
+            //    tempbag[i] = bag[i];
+            //    Console.WriteLine(bag[i] + " Первый.");
+            //}
+            //tempbag[tempbag.Length - 1] = 56;
+            //bag = tempbag;
+
+            //for (int i = 0; i < bag.Length; i++)
+            //{
+            //    Console.WriteLine(bag[i] + " Второй.");
+            //}
+
+            //Console.CursorVisible = false;
+            //char[,] map =
+            //{
+            //    {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#','#' },
+            //    {'#', 'X', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','#' },
+            //    {'#', ' ', '#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ','#' },
+            //    {'#', ' ', '#', ' ', ' ', ' ', '#', 'X', '#', ' ', ' ','#' },
+            //    {'#', ' ', '#', '#', '#', ' ', '#', ' ', '#', ' ', ' ','#' },
+            //    {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ','#' },
+            //    {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','#' },
+            //    {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ','#' },
+            //    {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ','#' },
+            //    {'#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#','#' }
+            //};
+
+            //int userX = 6, userY = 6;
+            //char[] bag = new char[1];
+            //while (true)
+            //{
+            //    Console.SetCursorPosition(0, 20);
+            //    Console.Write("Сумка: ");
+            //    for (int i = 0; i < bag.Length; i++)
+            //    {
+            //        Console.Write(bag[i] + " ");
+            //    }
+
+            //    Console.SetCursorPosition(0, 0);
+            //    for (int i = 0; i < map.GetLength(0); i++)
+            //    {
+            //        for (int j = 0; j < map.GetLength(1); j++)
+            //        {
+            //            Console.Write(map[i, j]);
+            //        }
+            //        Console.WriteLine();
+            //    }
+
+            //    Console.SetCursorPosition(userY, userX);
+            //    Console.Write("@");
+            //    ConsoleKeyInfo charKey = Console.ReadKey();
+            //    switch (charKey.Key)
+            //    {
+            //        case ConsoleKey.UpArrow:
+            //            if (map[userX - 1, userY] != '#')
+            //            {
+            //                userX--;
+            //            }
+            //            break;
+            //        case ConsoleKey.DownArrow:
+            //            if (map[userX + 1, userY] != '#')
+            //            {
+            //                userX++;
+            //            }
+            //            break;
+            //        case ConsoleKey.LeftArrow:
+            //            if (map[userX, userY - 1] != '#')
+            //            {
+            //                userY--;
+            //            }
+            //            break;
+            //        case ConsoleKey.RightArrow:
+            //            if (map[userX, userY + 1] != '#')
+            //            {
+            //                userY++;
+            //            }
+            //            break;
+            //    }
+
+            //    if (map[userX, userY] == 'X')
+            //    {
+            //        map[userX, userY] = 'o';
+            //        char[] tempbag = new char[bag.Length + 1];
+            //        for (int i = 0; i < bag.Length; i++)
+            //        {
+            //            tempbag[i] = bag[i];
+            //        }
+            //        tempbag[tempbag.Length - 1] = 'X';
+            //        bag = tempbag;
+            //    }
+            //    Console.Clear();
+            //}
+
+            //int[] numbers = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+            //for (int i = 0; i < numbers.Length; i++)
+            //{
+            //    Console.WriteLine(numbers[i]);
+            //}
+
+            //foreach (int i in numbers)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //    Console.WriteLine("Привет!");
+            //    Console.WriteLine("Ты здесь?");
+            //    WriteError("Нет соединения с интернетом.");
+            //    Console.WriteLine("Странно");
+            //    WriteError("Оплати интернет.", ConsoleColor.Red, symbol: '@');
+            //}
+
+            //static void WriteError(string text, ConsoleColor color = ConsoleColor.Red, char symbol = '!')
+            //{
+            //    ConsoleColor defaultColor = Console.ForegroundColor;
+            //    Console.ForegroundColor = color;
+            //    Console.WriteLine(symbol + text);
+            //    Console.ForegroundColor = defaultColor;
+            //}
+
+            //    int x = 3, y = 4, sum;
+
+            //    sum = Sum(x, y);
+            //    Console.WriteLine(sum);
+
+
+            //}
+
+            //static int Sum(int x, int y)
+            //{
+            //    return x + y;
+            //}
+            //    int[] array = new int[5];
+            //    array = EditArray(array, 2, 5);
+            //    Console.WriteLine(array[2]);
+
+            //}
+
+            //static int[] EditArray(int[] array, int index, int value)
+            //{
+            //    array = new int[6];
+            //    array[index] = value;
+            //    return array;
+            //}
+
+            //    int[] array1 = new int[5];
+            //    int[,] array2 = new int[5, 5];
+            //    array1 = Resize(array1, 6);
+            //    array2 = Resize(array2, 10, 10);
+            //    //Console.WriteLine(array1.Length);
+            //    Console.WriteLine(array2.Length);
+
+            //}
+
+            //static int[] Resize(int[] array, int Size)
+            //{
+            //    int[] tempArray = new int[Size];
+
+            //    for(int i = 0; i < array.Length; i++)
+            //    {
+            //        tempArray[i] = array[i];
+            //    }
+
+            //    return array;
+            //}
+
+            //static int[,] Resize(int[,] array, int x, int y)
+            //{
+            //    int[,] tempArray = new int[x, y];
+
+            //    for (int i = 0; x < array.GetLength(0); x++)
+            //    {
+            //        for (int j = 0; j < array.GetLength(1); j++)
+            //        {
+            //            tempArray[i, j] = array[i, j];
+            //        }
+            //    }
+
+            //    return array;
+            //}
+
+
+            //    int health = 5, maxHealth = 10;
+            //    int mana = 7, maxMana = 10;
+
+            //    while (true)
+            //    {
+            //        DrawBar(health, maxHealth, ConsoleColor.Green, 0, '|');
+            //        DrawBar(mana, maxMana, ConsoleColor.Blue, 1);
+
+            //        Console.SetCursorPosition(0, 5);
+            //        Console.Write("Ввдеите число, на которое измениться жизнь: ");
+            //        health += Convert.ToInt32(Console.ReadLine());
+            //        Console.Write("Ввдеите число, на которое измениться мана: ");
+            //        mana += Convert.ToInt32(Console.ReadLine());
+            //        Console.ReadKey();
+            //        Console.Clear();
+
+            //    }
+
+            //}
+
+            //static void DrawBar(int value, int maxValue, ConsoleColor color, int position, char symbol = '_')
+            //{
+            //    ConsoleColor degaultColor = Console.BackgroundColor;
+
+            //    string bar = "";
+
+            //    for (int i = 0; i < value; i++)
+            //    {
+            //        bar += symbol;
+            //    }
+
+            //    Console.SetCursorPosition(0, position);
+            //    Console.Write('[');
+            //    Console.BackgroundColor = color;
+            //    Console.Write(bar);
+            //    Console.BackgroundColor = degaultColor;
+
+            //    bar = "";
+
+            //    for (int i = value; i < maxValue; i++)
+            //    {
+            //        bar += " ";
+            //    }
+
+            //    Console.Write(bar + ']');
+            //}
+
+        //    Console.CursorVisible = false;
+
+        //    char[,] map = ReadMap("map.txt");
+        //    ConsoleKeyInfo pressedKey = new ConsoleKeyInfo('w', ConsoleKey.W, false, false, false);
+
+        //    Task.Run(() =>
+        //    {
+        //        while (true)
+        //        {
+        //            pressedKey = Console.ReadKey();
+        //        }
+        //    });
+
+        //    int pacmanX = 1;
+        //    int pacmanY = 1;
+        //    int score = 0;
+
+        //    while (true)
+        //    {
+
+        //        Console.Clear();
+
+        //        HandleInput(pressedKey, ref pacmanX, ref pacmanY, map, ref score);
+
+        //        Console.ForegroundColor = ConsoleColor.Blue;
+        //        DrawMap(map);
+
+        //        Console.ForegroundColor = ConsoleColor.Yellow;
+        //        Console.SetCursorPosition(pacmanX, pacmanY);
+        //        Console.Write('@');
+
+        //        Console.ForegroundColor = ConsoleColor.Red;
+        //        Console.SetCursorPosition(31, 0);
+        //        Console.Write($"Score: {score}");
+
+        //        Thread.Sleep(1000);
+
+        //    }
+
+        //}
+
+        //private static char[,] ReadMap(string path)
+        //{
+        //    string[] file = File.ReadAllLines("map.txt");
+
+        //    char[,] map = new char[GetLengthOfLine(file), file.Length];
+
+        //    for (int x = 0; x < map.GetLength(0); x++)
+        //        for (int y = 0; y < map.GetLength(1); y++)
+        //            map[x, y] = file[y][x];
+
+        //    return map;
+
+        //}
+
+        //private static void DrawMap(char[,] map)
+        //{
+        //    for (int y = 0; y < map.GetLength(1); y++)
+        //    {
+        //        for (int x = 0; x < map.GetLength(0); x++)
+        //        {
+        //            Console.Write(map[x, y]);
+        //        }
+        //        Console.WriteLine();
+        //    }
+
+        //}
+
+        //private static void HandleInput(ConsoleKeyInfo pressedKey, ref int pacmanX, ref int pacmanY, char[,] map, ref int score)
+        //{
+        //    int[] direction = GetDirection(pressedKey);
+
+        //    int nextPacmanPositionX = pacmanX + direction[0];
+        //    int nextPacmanPositionY = pacmanY + direction[1];
+
+        //    char nextCell = map[nextPacmanPositionX, nextPacmanPositionY];
+
+        //    if (nextCell == ' ' || nextCell == '.')
+        //    {
+        //        pacmanX = nextPacmanPositionX;
+        //        pacmanY = nextPacmanPositionY;
+
+        //        if (nextCell == '.')
+        //        {
+        //            score++;
+        //            map[nextPacmanPositionX, nextPacmanPositionY] = ' ';
+        //        }
+        //    }
+        //}
+
+        //private static int[] GetDirection(ConsoleKeyInfo pressedKey)
+        //{
+        //    int[] direction = { 0, 0 };
+
+        //    if (pressedKey.Key == ConsoleKey.UpArrow)
+        //        direction[1] -= 1;
+        //    else if (pressedKey.Key == ConsoleKey.DownArrow)
+        //        direction[1] += 1;
+        //    else if (pressedKey.Key == ConsoleKey.LeftArrow)
+        //        direction[0] -= 1;
+        //    else if (pressedKey.Key == ConsoleKey.RightArrow)
+        //        direction[0] += 1;
+
+        //    return direction;
+        //}
+
+        //private static int GetLengthOfLine(string[] lines)
+        //{
+        //    int maxLenght = lines[0].Length;
+        //    foreach (var line in lines)
+        //        if (line.Length > maxLenght)
+        //            maxLenght = line.Length;
+        //    return maxLenght;
+
+        //}
+
+
+
         }
+    
     }
 }
